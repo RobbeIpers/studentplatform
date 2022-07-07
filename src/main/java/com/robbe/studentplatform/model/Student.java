@@ -1,54 +1,45 @@
 package com.robbe.studentplatform.model;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.*;
+@Data
 @Entity
 public class Student {
     @Id
+    @Setter(value = AccessLevel.NONE)
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-    private String firstName;
-    private String lastName;
+    @NotBlank(message = "Firstname is mandatory")
+    private String firstname;
+    @NotBlank(message = "Lastname is mandatory")
+    private String lastname;
     private int age;
+  //  @JsonManagedReference
 
-    public Student(String firstName, String lastName, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @JoinTable(name = "student_courses",
+            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
+    private List<Course> courses;
+    public Student(String firstname, String lastname, int age) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.age = age;
     }
 
     public Student() {
-        firstName = "default";
-        lastName = "default";
+        firstname = "default";
+        lastname = "default";
         age = 0;
     }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void addCourse(Course c){
+        courses.add(c);
     }
 }
