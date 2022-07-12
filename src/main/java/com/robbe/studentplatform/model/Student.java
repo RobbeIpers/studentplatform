@@ -20,7 +20,6 @@ public class Student {
     @NotBlank(message = "Lastname is mandatory")
     private String lastname;
     private int age;
-  //  @JsonManagedReference
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JsonIgnore

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd ">
+    <changeSet id="1" author="Robbe">
+        <createTable tableName="course">
+            <column name="id" type="int">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="teacher" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="capacity" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="student">
+            <column name="id" type="int">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="firstname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="int"/>
+        </createTable>
+        <createTable tableName="student_courses">
+            <column name="student_id" type="int"/>
+            <column name="course_id" type="int"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

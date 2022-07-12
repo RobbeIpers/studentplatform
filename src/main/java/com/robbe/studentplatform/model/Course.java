@@ -1,12 +1,16 @@
 package com.robbe.studentplatform.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Time;
 import java.util.List;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Course {
     @Id
@@ -20,20 +24,19 @@ public class Course {
     private int capacity = 25;
     @ManyToMany(mappedBy = "courses")
     private List<Student> students;
-    public Course(String name, String teacher, int capacity) {
-        this.name = name;
-        Course c;
-        this.teacher = teacher;
-        this.capacity = capacity;
-    }
+
+    @Column(name = "endTime")
+    @JsonFormat(pattern="T'HH:mm:ss")
+    private Time startTime = null;
+
+    @Column(name = "startTime")
+    @JsonFormat(pattern="T'HH:mm:ss")
+    private Time endTime = null;
 
     public void addStudent(Student s){
         if(!students.contains(s)){
             students.add(s);
             s.getCourses().add(this);
-           // s.addCourse(this);
         }
-    }
-    public Course() {
     }
 }
