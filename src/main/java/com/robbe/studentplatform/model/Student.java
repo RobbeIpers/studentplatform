@@ -38,6 +38,12 @@ public class Student {
         lastname = "default";
         age = 0;
     }
+
+    /**
+     * add course to student
+     *
+     * @param c course to be added
+     */
     public void addCourse(Course c){
         courses.add(c);
     }

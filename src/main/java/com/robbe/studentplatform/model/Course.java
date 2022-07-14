@@ -33,6 +33,10 @@ public class Course {
     @JsonFormat(pattern="T'HH:mm:ss")
     private Time endTime = null;
 
+    /**4
+     * add student to the course
+     * @param s student to be added
+     */
     public void addStudent(Student s){
         if(!students.contains(s)){
             students.add(s);
