@@ -75,6 +75,9 @@ public class StudentController {
      */
     @DeleteMapping("/{id}")
     public String deleteStudentById(@PathVariable("id") Integer id){
+        if (studentRepository.findById(id).isEmpty()) {
+            throw new MissingDataException("No student with that id");
+        }
         studentRepository.deleteById(id);
         return "Student deleted";
     }

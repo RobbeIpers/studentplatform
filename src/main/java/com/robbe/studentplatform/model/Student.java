@@ -1,14 +1,14 @@
 package com.robbe.studentplatform.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.*;
 @Data
+@Builder
+@AllArgsConstructor
 @Entity
 public class Student {
     @Id
@@ -31,6 +31,7 @@ public class Student {
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
+        this.courses = new ArrayList<>();
     }
 
     public Student() {

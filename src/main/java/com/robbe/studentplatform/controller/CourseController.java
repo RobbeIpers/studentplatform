@@ -76,15 +76,19 @@ public class CourseController {
      *
      * @param courseiId course the students wants to attend
      * @param studentId id of student that will be added to course
-     * @return confirmation
+     * @return course after update
      */
     @PutMapping("/{courseId}/students/{studentId}")
-    public String addStudent(@PathVariable("courseId") Integer courseiId, @PathVariable("studentId") Integer studentId){
+    public EntityModel<Course> addStudent(@PathVariable("courseId") Integer courseiId, @PathVariable("studentId") Integer studentId){
         Course c = courseRepository.findById(courseiId).orElseThrow(() -> new MissingDataException("No Course with that id"));
         Student s = studentRepository.findById(studentId).orElseThrow(() -> new MissingDataException("No Student whith that id"));
         c.addStudent(s);
         courseRepository.save(c);
-        return "Student "+ s.getFirstname()+ " "+s.getLastname()+ " added.";
+        return EntityModel.of(c,
+                linkTo(methodOn(CourseController.class).getCourse(c.getId())).withSelfRel(),
+                linkTo(methodOn(CourseController.class).getCourseStudentsById(c.getId())).withRel("students"),
+                linkTo(methodOn(CourseController.class).getAllCourses()).withRel("courses"));
+
    }
    /**
     * Delete course
@@ -93,9 +97,11 @@ public class CourseController {
     * @return Course deleted
     */
     @DeleteMapping("/{id}")
-    public String deleteCourseById(@PathVariable("id") Integer id){
-       courseRepository.deleteById(id);
+    public String deleteCourseById(@PathVariable("id") Integer id) {
+        if (courseRepository.findById(id).isEmpty()) {
+            throw new MissingDataException("No course with that id");
+        }
+        courseRepository.deleteById(id);
         return "Course deleted";
     }
-
 }
