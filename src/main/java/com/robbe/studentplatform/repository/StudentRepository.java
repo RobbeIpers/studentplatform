@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface StudentRepository extends CrudRepository<Student, Integer> {
     List<Student> findByLastname(@Param("lastname") String lastname);
+    List<Student> findByUsername(@Param("username") String username);
 }

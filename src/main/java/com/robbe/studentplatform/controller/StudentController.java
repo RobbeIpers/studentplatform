@@ -6,6 +6,7 @@ import com.robbe.studentplatform.model.Student;
 import com.robbe.studentplatform.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,6 +20,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class StudentController {
     @Autowired // automatically get bean called StudentRepository to handle data
     private StudentRepository studentRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Get a student
@@ -90,6 +93,8 @@ public class StudentController {
      */
     @PostMapping("")
     public Student makeStudent(@RequestBody @Valid Student s){
+        s.setUsername();
+        s.setPassword(passwordEncoder.encode(s.getPassword()));
         return studentRepository.save(s);
     }
 }

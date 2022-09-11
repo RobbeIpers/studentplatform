@@ -25,7 +25,7 @@ public class Course {
     private String teacher;
     @Builder.Default
     private int capacity = 25;
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
     private List<Student> students;
     @Builder.Default
     @Column(name = "endTime")
