@@ -22,8 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final long serialVersionUID = -2550085165626007488L;
-
-    @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
